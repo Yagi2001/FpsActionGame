@@ -21,6 +21,15 @@ public class PlayerMovement : MonoBehaviour
     private CharacterController characterController;
 
     private bool canMove = true;
+    private void OnEnable()
+    {
+        GameController.firstMeetingWithGod += FreezePlayer;
+    }
+
+    private void OnDisable()
+    {
+        GameController.firstMeetingWithGod -= FreezePlayer;
+    }
 
     void Start()
     {
@@ -54,7 +63,7 @@ public class PlayerMovement : MonoBehaviour
             moveDirection.y -= gravity * Time.deltaTime;
         }
 
-        if (Input.GetKey( KeyCode.R ) && canMove)
+        if (Input.GetKey( KeyCode.C ) && canMove)
         {
             characterController.height = crouchHeight;
             walkSpeed = crouchSpeed;
@@ -77,5 +86,10 @@ public class PlayerMovement : MonoBehaviour
             playerCamera.transform.localRotation = Quaternion.Euler( rotationX, 0, 0 );
             transform.rotation *= Quaternion.Euler( 0, Input.GetAxis( "Mouse X" ) * lookSpeed, 0 );
         }
+    }
+
+    public void FreezePlayer()
+    {
+        canMove = false;
     }
 }
