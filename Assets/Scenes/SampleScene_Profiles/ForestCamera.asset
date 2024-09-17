@@ -59,7 +59,7 @@ MonoBehaviour:
     value: 0
   colorFilter:
     overrideState: 1
-    value: {r: 3.5088196, g: 3.0248444, b: 5.777453, a: 1}
+    value: {r: 2.572549, g: 4.4235296, b: 5.992157, a: 1}
   hueShift:
     overrideState: 0
     value: 0
@@ -1445,7 +1445,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8e6292b2c06870d4495f009f912b9600, type: 3}
-  m_Name: Main Camera Profile
+  m_Name: ForestCamera
   m_EditorClassIdentifier: 
   settings:
   - {fileID: -3795642255417857033}
