@@ -1,7 +1,9 @@
 using UnityEngine;
+using System.Collections;
 
 public class GunMechanic : MonoBehaviour
 {
+    [Header( "Weapon Settings" )]
     [SerializeField]
     private float _damage = 10f;
     [SerializeField]
@@ -9,16 +11,40 @@ public class GunMechanic : MonoBehaviour
     [SerializeField]
     private float _fireRate = 15f;
     [SerializeField]
+    private int _maxAmmo = 10;
+    private int _currentAmmo;
+    [SerializeField]
+    private float _reloadTime = 1f;
+    private bool _isReloading = false;
+
+
+    [Header( "Visual Effects" )]
+    [SerializeField]
     private ParticleSystem _muzzleFlash;
     [SerializeField]
     private GameObject _hitEffect;
+
+    [Header("References")]
     [SerializeField]
     private Camera _fpsCam;
 
     private float nextTimeToFire =0f;
 
+    private void Start()
+    {
+        _currentAmmo = _maxAmmo;
+    }
+
     private void Update()
     {
+        if (_isReloading)
+            return;
+        if (_currentAmmo <= 0)
+        {
+            StartCoroutine(Reload());
+            return;
+        }
+        
         if (Input.GetButtonDown( "Fire1" ) && Time.time >= nextTimeToFire)
         {
             nextTimeToFire = Time.time + 1f / _fireRate;
@@ -28,12 +54,11 @@ public class GunMechanic : MonoBehaviour
 
     private void Shoot()
     {
+        _currentAmmo--;
         _muzzleFlash.Play();
         RaycastHit hitInfo;
         if(Physics.Raycast( _fpsCam.transform.position, _fpsCam.transform.forward, out hitInfo, _range ))
         {
-            Debug.Log( hitInfo.transform.name );
-
             EnemyDamage enemyDamage = hitInfo.transform.GetComponent<EnemyDamage>();
             if (enemyDamage != null)
                 enemyDamage.TakeDamage( _damage );
@@ -44,5 +69,14 @@ public class GunMechanic : MonoBehaviour
             Destroy( hitEffectGO, 2f );
         }
 
+    }
+
+    private IEnumerator Reload()
+    {
+        _isReloading = true;
+        Debug.Log( "Reloading..." );
+        yield return new WaitForSeconds( _reloadTime );
+        _currentAmmo = _maxAmmo;
+        _isReloading = false;
     }
 }

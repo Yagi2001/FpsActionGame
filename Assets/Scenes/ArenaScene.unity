@@ -788,6 +788,8 @@ MonoBehaviour:
   _damage: 10
   _range: 100
   _fireRate: 15
+  _maxAmmo: 10
+  _reloadTime: 1
   _muzzleFlash: {fileID: 540387258}
   _hitEffect: {fileID: 1475561396752269305, guid: 356b7ab7e70c02342a69581ad39f1495, type: 3}
   _fpsCam: {fileID: 1057458321}
