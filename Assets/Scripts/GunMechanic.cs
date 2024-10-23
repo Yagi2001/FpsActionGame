@@ -27,6 +27,8 @@ public class GunMechanic : MonoBehaviour
     [Header("References")]
     [SerializeField]
     private Camera _fpsCam;
+    [SerializeField]
+    private Animator _anim;
 
     private float nextTimeToFire =0f;
 
@@ -75,7 +77,9 @@ public class GunMechanic : MonoBehaviour
     {
         _isReloading = true;
         Debug.Log( "Reloading..." );
+        _anim.SetBool( "isReloading", true );
         yield return new WaitForSeconds( _reloadTime );
+        _anim.SetBool( "isReloading", false );
         _currentAmmo = _maxAmmo;
         _isReloading = false;
     }
