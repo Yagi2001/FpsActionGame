@@ -1,6 +1,6 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyDamage : MonoBehaviour
 {
@@ -12,39 +12,47 @@ public class EnemyDamage : MonoBehaviour
     private Rigidbody _rb;
     [SerializeField]
     private float _hitReactTime;
+    [SerializeField]
+    private NavMeshAgent _enemy;
     private bool _isDying;
-    private bool _isHit;
-    private Enemy Enemy;
+    private ChasePlayer ChasePlayer;
     private float originalSpeed;
+    private Coroutine hitCoroutine;  // Store the currently running hit coroutine
 
     private void Start()
     {
         _isDying = false;
-        Enemy = GetComponent<Enemy>();
-        originalSpeed = Enemy.speed;
-
+        originalSpeed = _enemy.speed;
     }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage( float damage )
     {
         _health -= damage;
         if (_health <= 0f)
+        {
             Die();
+        }
         else
         {
-            if (!_isHit)
+            if (hitCoroutine == null) 
             {
-                StartCoroutine( HandleHit() );
+                hitCoroutine = StartCoroutine( HandleHit() );
+            }
+            else
+            {
+                StopCoroutine( hitCoroutine ); 
+                hitCoroutine = StartCoroutine( HandleHit() );
             }
         }
     }
 
     private void Die()
     {
-        if(_anim != null && !_isDying)
+        if (_anim != null && !_isDying)
         {
+            _enemy.enabled = false;
             _isDying = true;
-            _rb.isKinematic = true;   //This is a solution for weird flying dead bug. Later can be changed to an better alternative
+            _rb.isKinematic = true;  // Solution for weird flying dead bug
             _anim.SetTrigger( "DeathTrigger" );
             Destroy( gameObject, 5f );
         }
@@ -52,11 +60,10 @@ public class EnemyDamage : MonoBehaviour
 
     private IEnumerator HandleHit()
     {
-        _isHit = true;
-        Enemy.speed = 0f;
+        _enemy.speed = 0f;
         _anim.SetTrigger( "Hit1Trigger" );
         yield return new WaitForSeconds( _hitReactTime );
-        Enemy.speed = originalSpeed;
-        _isHit = false;
+        _enemy.speed = originalSpeed;
+        hitCoroutine = null;
     }
 }
