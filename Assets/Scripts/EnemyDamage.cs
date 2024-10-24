@@ -10,11 +10,19 @@ public class EnemyDamage : MonoBehaviour
     private Animator _anim;
     [SerializeField]
     private Rigidbody _rb;
+    [SerializeField]
+    private float _hitReactTime;
     private bool _isDying;
+    private bool _isHit;
+    private Enemy Enemy;
+    private float originalSpeed;
 
     private void Start()
     {
         _isDying = false;
+        Enemy = GetComponent<Enemy>();
+        originalSpeed = Enemy.speed;
+
     }
 
     public void TakeDamage(float damage)
@@ -24,7 +32,10 @@ public class EnemyDamage : MonoBehaviour
             Die();
         else
         {
-            _anim.SetTrigger( "Hit1Trigger" );
+            if (!_isHit)
+            {
+                StartCoroutine( HandleHit() );
+            }
         }
     }
 
@@ -37,5 +48,15 @@ public class EnemyDamage : MonoBehaviour
             _anim.SetTrigger( "DeathTrigger" );
             Destroy( gameObject, 5f );
         }
+    }
+
+    private IEnumerator HandleHit()
+    {
+        _isHit = true;
+        Enemy.speed = 0f;
+        _anim.SetTrigger( "Hit1Trigger" );
+        yield return new WaitForSeconds( _hitReactTime );
+        Enemy.speed = originalSpeed;
+        _isHit = false;
     }
 }
