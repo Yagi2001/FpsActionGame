@@ -105,7 +105,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1325387787619771097}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.01, z: 0.06}
+  m_LocalPosition: {x: 0, y: 1.01, z: 0.239}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -310,7 +310,7 @@ MonoBehaviour:
   _walkSpeed: 6
   _runSpeed: 12
   _jumpPower: 7
-  _gravity: 10
+  _gravity: 9.8
   _lookSpeed: 2
   _lookXLimit: 45
   _defaultHeight: 2

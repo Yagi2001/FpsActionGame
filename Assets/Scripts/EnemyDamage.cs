@@ -6,6 +6,10 @@ public class EnemyDamage : MonoBehaviour
 {
     [SerializeField]
     private float _health;
+    [SerializeField]
+    private Animator _anim;
+    [SerializeField]
+    private Rigidbody _rb;
     public void TakeDamage(float damage)
     {
         _health -= damage;
@@ -15,6 +19,11 @@ public class EnemyDamage : MonoBehaviour
 
     private void Die()
     {
-        Destroy( gameObject );
+        _rb.isKinematic = true;   //This is a solution for weird flying dead bug. Later can be changed to an better alternative
+        if(_anim != null)
+        {
+            _anim.SetTrigger( "DeathTrigger" );
+        }
+        Destroy( gameObject,5f );
     }
 }
