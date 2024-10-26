@@ -63,7 +63,7 @@ public class GunMechanic : MonoBehaviour
         {
             EnemyDamage enemyDamage = hitInfo.transform.GetComponent<EnemyDamage>();
             if (enemyDamage != null)
-                enemyDamage.TakeDamage( _damage );
+                enemyDamage.TakeDamage( _damage,hitInfo.point );
         }
         if (_hitEffect != null)                 //Need to find an effect for here
         {

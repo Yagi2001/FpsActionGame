@@ -13,6 +13,8 @@ public class EnemyDamage : MonoBehaviour
     [SerializeField]
     private float _hitReactTime;
     [SerializeField]
+    private GameObject _hitVFX;
+    [SerializeField]
     private AudioSource _hitSound1;
     [SerializeField]
     private AudioSource _hitSound2;
@@ -30,8 +32,10 @@ public class EnemyDamage : MonoBehaviour
         originalSpeed = _enemy.speed;
     }
 
-    public void TakeDamage( float damage )
+    public void TakeDamage( float damage, Vector3 hitPoint )
     {
+        GameObject hitEffectGO = Instantiate( _hitVFX, hitPoint, Quaternion.identity );
+        Destroy( hitEffectGO, 0.5f );
         _health -= damage;
         if (_health <= 0f)
         {
