@@ -24,6 +24,12 @@ public class GunMechanic : MonoBehaviour
     [SerializeField]
     private GameObject _hitEffect;
 
+    [Header( "Sound Effects" )]
+    [SerializeField]
+    private AudioSource _fireSound;
+    [SerializeField]
+    private AudioSource _reloadSound;
+
     [Header("References")]
     [SerializeField]
     private Camera _fpsCam;
@@ -56,6 +62,8 @@ public class GunMechanic : MonoBehaviour
 
     private void Shoot()
     {
+        _fireSound.Play();
+        _anim.SetTrigger( "hitTrigger" );
         _currentAmmo--;
         _muzzleFlash.Play();
         RaycastHit hitInfo;
@@ -75,6 +83,7 @@ public class GunMechanic : MonoBehaviour
 
     private IEnumerator Reload()
     {
+        _reloadSound.Play();
         _isReloading = true;
         Debug.Log( "Reloading..." );
         _anim.SetBool( "isReloading", true );
