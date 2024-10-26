@@ -13,9 +13,14 @@ public class EnemyDamage : MonoBehaviour
     [SerializeField]
     private float _hitReactTime;
     [SerializeField]
+    private AudioSource _hitSound1;
+    [SerializeField]
+    private AudioSource _hitSound2;
+    [SerializeField]
+    private AudioSource _deadSound; // Later on it can be better to put them those audios together instead of adding them one by one. Currently fine for test purposes
+    [SerializeField]
     private NavMeshAgent _enemy;
     private bool _isDying;
-    private ChasePlayer ChasePlayer;
     private float originalSpeed;
     private Coroutine hitCoroutine;  // Store the currently running hit coroutine
 
@@ -54,12 +59,18 @@ public class EnemyDamage : MonoBehaviour
             _isDying = true;
             _rb.isKinematic = true;  // Solution for weird flying dead bug
             _anim.SetTrigger( "DeathTrigger" );
+            _deadSound.Play();
             Destroy( gameObject, 5f );
         }
     }
 
     private IEnumerator HandleHit()
     {
+        int randomHitSound = Random.Range( 0, 2 );
+        if (randomHitSound == 0)
+            _hitSound1.Play();
+        else
+            _hitSound2.Play();
         _enemy.speed = 0f;
         _anim.SetTrigger( "Hit1Trigger" );
         yield return new WaitForSeconds( _hitReactTime );
