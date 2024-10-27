@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab60c89dae9d03e47a9e3ea5ee943c92, type: 3}
+  m_Name: EntryTalk
+  m_EditorClassIdentifier: 
+  dialogueName: EntryTalk
+  audioClips:
+  - {fileID: 8300000, guid: 3c3bd24f4ea0f73468c8bc1792fb1ad5, type: 3}
+  - {fileID: 8300000, guid: 16ab247f95cb02e4b9bfd3670c509db6, type: 3}
+  - {fileID: 8300000, guid: 4d180725e2dd1864e95206f3cdd99adc, type: 3}
+  - {fileID: 8300000, guid: 4c8ccf7a6a0c66149b053c52a20ee6c2, type: 3}
+  - {fileID: 8300000, guid: 63d562c0a895853439fe740c6ca6f8a6, type: 3}
+  duration: 38.5
